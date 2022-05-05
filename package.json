@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/mick1031/2022nodejs_week2#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.3.2",
     "uuid": "^8.3.2"
   },
   "engines": {
