@@ -110,21 +110,26 @@ const requestListener = async (req, res) => {
         res.end();
     } else if (req.url.startsWith('/posts/') && req.method == 'DELETE') {
         // TODO delete one
-        const id = req.url.split('/').pop();
-        const list = await Post.find({ _id: id });
-        const model = list[0];
-        if (model !== undefined) {
-            await Post.findByIdAndDelete(id);
+        try {
+            const id = req.url.split('/').pop();
+            const list = await Post.find({ _id: id });
+            const model = list[0];
+            if (model !== undefined) {
+                await Post.findByIdAndDelete(id);
 
-            res.writeHead(200, headers);
-            res.write(JSON.stringify({
-                status: "success",
-                data: await Post.find(),
-            }));
-            res.end();
-        } else {
+                res.writeHead(200, headers);
+                res.write(JSON.stringify({
+                    status: "success",
+                    data: await Post.find(),
+                }));
+                res.end();
+            } else {
+                errorHandle(res);
+            }
+        } catch (error) {
             errorHandle(res);
         }
+
     } else if (req.url.method == "OPTIONS") {
         res.writeHead(200, headers);
         res.end();
